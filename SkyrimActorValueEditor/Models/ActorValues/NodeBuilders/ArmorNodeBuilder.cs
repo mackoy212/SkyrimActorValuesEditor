@@ -4,6 +4,7 @@ using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
 using System.Diagnostics.CodeAnalysis;
+using static Mutagen.Bethesda.Skyrim.Package;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 {
@@ -13,20 +14,28 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         public IEnumerable<KeyValuePair<string, TreeNode>> TryBuild(INpcGetter npc)
         {
+            var armorNodes = new Dictionary<string, TreeNode>();
+
             foreach (var armor in GetArmors(npc))
             {
                 if (TryGetEnchantment(armor, out var enchantment))
                 {
                     foreach (var (actorValue, enchantmentNode) in _enchantmentNodeBuilder.TryBuild(enchantment))
                     {
-                        var armorNode = new ArmorNode(armor);
+                        if (!armorNodes.TryGetValue(actorValue, out var armorNode))
+                        {
+                            armorNode = new ArmorNode(armor);
+                            armorNodes[actorValue] = armorNode;
+                        }
+
                         armorNode.AddNode(enchantmentNode);
-                        yield return new(actorValue, armorNode);
                     }
                 }
 
-                yield return new("DamageResist", new ArmorNode(armor, r => r.ArmorRating));
+                armorNodes["DamageResist"] = new ArmorNode(armor, r => r.ArmorRating);
             }
+
+            return armorNodes;
         }
 
         private static IEnumerable<IArmorGetter> GetArmors(INpcGetter npc)
@@ -46,15 +55,11 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         private static bool TryGetEnchantment(IArmorGetter armor, [MaybeNullWhen(false)] out IObjectEffectGetter enchantment)
         {
-            if (GameReader.TryResolve(armor.ObjectEffect, out var effectRecord)
-                && effectRecord is IObjectEffectGetter ench)
-            {
-                enchantment = ench;
-                return true;
-            }
+            enchantment = GameReader.TryResolve(armor.ObjectEffect, out var effectRecord)
+                ? effectRecord as IObjectEffectGetter
+                : null;
 
-            enchantment = null;
-            return false;
+            return enchantment != null;
         }
     }
 }
