@@ -1,0 +1,26 @@
+﻿using Mutagen.Bethesda.Skyrim;
+using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
+
+namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes.Base
+{
+    public abstract class RecordNode<T> : TreeNode, IRecordNode<T> where T : ISkyrimMajorRecordGetter
+    {
+        public T Record { get; }
+
+        protected RecordNode(string name, T record) : base(name)
+        {
+            Record = record;
+        }
+
+        protected RecordNode(T record) : base(GetRecordNodeName(record))
+        {
+            Record = record;
+        }
+
+        private static string GetRecordNodeName(T record)
+        {
+            return record.EditorID ?? "UNKNOWN";
+        }
+    }
+}

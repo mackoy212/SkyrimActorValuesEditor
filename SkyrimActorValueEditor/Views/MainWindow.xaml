@@ -1,0 +1,124 @@
+﻿<Window x:Class="SkyrimActorValueEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SkyrimActorValueEditor"
+        xmlns:vm="clr-namespace:SkyrimActorValueEditor.ViewModels"
+        xmlns:treeNodes="clr-namespace:SkyrimActorValueEditor.Models.ActorValues.Nodes.Base"
+        mc:Ignorable="d"
+        Title="Skyrim Actor Value Editor" Height="768" Width="1024"
+        WindowState="Maximized">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                x:Name="SearchBox"
+                Grid.Column="0"
+                Height="25"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center">
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter"
+                        Command="{Binding ApplyFilterCommand}"
+                        CommandParameter="{Binding Text, ElementName=SearchBox}"/>
+                </TextBox.InputBindings>
+            </TextBox>
+
+            <ComboBox
+                ItemsSource="{Binding FilterOptions}"
+                SelectedItem="{Binding SelectedFilterOption}"
+                Width="120"
+                Height="25"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                Margin="10,0,0,0"
+                Grid.Column="1">
+            </ComboBox>
+        </Grid>
+
+        <DataGrid
+            ItemsSource="{Binding FilteredActors}"
+            SelectedItem="{Binding SelectedActor}"
+            IsReadOnly="True"
+            AutoGenerateColumns="False" 
+            SelectionMode="Single"
+            CanUserResizeRows="False"
+            Margin="5"
+            Grid.Row="1"
+            Grid.Column="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="FormKey" Binding="{Binding FormKey}" Width="Auto"/>
+                <DataGridTextColumn Header="EditorID" Binding="{Binding EditorID}" Width="Auto"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Copy FormKey" Command="{Binding CopyFormKey}"/>
+                    <MenuItem Header="Copy EditorID" Command="{Binding CopyEditorID}"/>
+                    <MenuItem Header="Copy Name" Command="{Binding CopyName}"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
+        <TreeView 
+            ItemsSource="{Binding ActorValueTreeNodes}"
+            VirtualizingPanel.IsVirtualizing="True"
+            VirtualizingPanel.VirtualizationMode="Recycling"
+            ScrollViewer.CanContentScroll="True"
+            Margin="5"
+            Grid.Column="1" Grid.Row="1">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type treeNodes:TreeNode}" ItemsSource="{Binding Children}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}" Width="400"/>
+                        <TextBox Width="60"
+                                 Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 IsEnabled="{Binding IsEditable}"/>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+        <Button
+            Command="{Binding SaveChanges}"
+            Grid.Column="1" 
+            Content="Save Changes" 
+            HorizontalAlignment="Left" 
+            Margin="5,0,0,0" 
+            VerticalAlignment="Center" 
+            Width="100"
+            Height="25"/>
+
+        <TextBlock 
+            Grid.Column="1"
+            Text="{Binding SelectedActor}"
+            HorizontalAlignment="Left" 
+            Margin="110,0,0,0" 
+            TextWrapping="Wrap" 
+            VerticalAlignment="Center" 
+            Width="Auto"
+            Height="25"/>
+
+    </Grid>
+</Window>

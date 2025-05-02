@@ -1,0 +1,208 @@
+﻿
+# DO NOT MODIFY THIS FILE!
+
+- Name: Base
+  Children:
+    - Name: Health
+    - Name: Magicka
+    - Name: Stamina
+
+- Name: AI Data
+  Children:
+    - Name: Aggression
+    - Name: Confidence
+    - Name: Energy
+    - Name: Morality
+    - Name: Mood
+    - Name: Assistance
+
+- Name: Skills
+  Children:
+    - Name: Warrior
+      Children:
+        - Name: OneHanded
+        - Name: TwoHanded
+        - Name: Archery
+        - Name: Block
+        - Name: Smithing
+        - Name: HeavyArmor
+    - Name: Mage
+      Children:
+        - Name: Alteration
+        - Name: Conjuration
+        - Name: Destruction
+        - Name: Illusion
+        - Name: Restoration
+        - Name: Enchanting
+    - Name: Thief
+      Children:
+        - Name: LightArmor
+        - Name: Pickpocket
+        - Name: Lockpicking
+        - Name: Sneak
+        - Name: Alchemy
+        - Name: Speech
+
+- Name: Resistances
+  Children:
+    - Name: DamageResist
+    - Name: PoisonResist
+    - Name: ResistFire
+    - Name: ResistShock
+    - Name: ResistFrost
+    - Name: ResistMagic
+    - Name: ResistDisease
+
+- Name: Modifiers
+  Children:
+    - Name: Warrior
+      Children:
+        - Name: OneHandedModifier
+        - Name: TwoHandedModifier
+        - Name: MarksmanModifier
+        - Name: BlockModifier
+        - Name: SmithingModifier
+        - Name: HeavyArmorModifier
+    - Name: Mage
+      Children:   
+        - Name: AlterationModifier
+        - Name: ConjurationModifier
+        - Name: DestructionModifier
+        - Name: IllusionModifier
+        - Name: RestorationModifier
+        - Name: EnchantingModifier
+    - Name: Thief
+      Children: 
+        - Name: LightArmorModifier
+        - Name: PickpocketModifier
+        - Name: LockpickingModifier
+        - Name: SneakingModifier
+        - Name: AlchemyModifier
+        - Name: SpeechcraftModifier
+
+- Name: PowerModifiers
+  Children:
+    - Name: Warrior
+      Children:
+        - Name: OneHandedPowerModifier
+        - Name: TwoHandedPowerModifier
+        - Name: MarksmanPowerModifier
+        - Name: BlockPowerModifier
+        - Name: SmithingPowerModifier
+        - Name: HeavyArmorPowerModifier
+    - Name: Mage
+      Children:   
+        - Name: AlterationPowerModifier
+        - Name: ConjurationPowerModifier
+        - Name: DestructionPowerModifier
+        - Name: IllusionPowerModifier
+        - Name: RestorationPowerModifier
+        - Name: EnchantingPowerModifier
+    - Name: Thief
+      Children: 
+        - Name: LightArmorPowerModifier
+        - Name: PickpocketPowerModifier
+        - Name: LockpickingPowerModifier
+        - Name: SneakingPowerModifier
+        - Name: AlchemyPowerModifier
+        - Name: SpeechcraftPowerModifier
+
+- Name: SkillAdvances
+  Children:
+    - Name: Warrior
+      Children:
+        - Name: OneHandedSkillAdvance
+        - Name: TwoHandedSkillAdvance
+        - Name: MarksmanSkillAdvance
+        - Name: BlockSkillAdvance
+        - Name: SmithingSkillAdvance
+        - Name: HeavyArmorSkillAdvance
+    - Name: Mage
+      Children:
+        - Name: AlterationSkillAdvance
+        - Name: ConjurationSkillAdvance
+        - Name: DestructionSkillAdvance
+        - Name: IllusionSkillAdvance
+        - Name: RestorationSkillAdvance
+        - Name: EnchantingSkillAdvance
+    - Name: Thief
+      Children:  
+        - Name: LightArmorSkillAdvance
+        - Name: PickpocketSkillAdvance
+        - Name: LockpickingSkillAdvance
+        - Name: SneakingSkillAdvance
+        - Name: AlchemySkillAdvance
+        - Name: SpeechcraftSkillAdvance
+  
+- Name: Variables
+  Children:
+    - Name: Variable01
+    - Name: Variable02
+    - Name: Variable03
+    - Name: Variable04
+    - Name: Variable05
+    - Name: Variable06
+    - Name: Variable07
+    - Name: Variable08
+    - Name: Variable09
+    - Name: Variable10  
+  
+- Name: Other
+  Children:
+    - Name: Paralysis
+    - Name: Invisibility
+    - Name: NightEye
+    - Name: DetectLifeRange
+    - Name: WaterBreathing
+    - Name: WaterWalking
+    - Name: Fame
+    - Name: Infamy
+    - Name: JumpingBonus
+    - Name: WardPower
+    - Name: RightItemCharge
+    - Name: ArmorPerks
+    - Name: ShieldPerks
+    - Name: WardDeflection
+    - Name: BowSpeedBonus
+    - Name: FavorActive
+    - Name: FavorsPerDay
+    - Name: FavorsPerDayTimer
+    - Name: LeftItemCharge
+    - Name: AbsorbChance
+    - Name: Blindness
+    - Name: WeaponSpeedMult
+    - Name: ShoutRecoveryMult
+    - Name: BowStaggerBonus
+    - Name: Telekinesis
+    - Name: FavorPointsBonus
+    - Name: LastBribedIntimidated
+    - Name: LastFlattered
+    - Name: MovementNoiseMult
+    - Name: BypassVendorStolenCheck
+    - Name: BypassVendorKeywordCheck
+    - Name: WaitingForPlayer
+    - Name: HealRate
+    - Name: MagickaRate
+    - Name: StaminaRate
+    - Name: SpeedMult
+    - Name: InventoryWeight
+    - Name: CarryWeight
+    - Name: CriticalChance
+    - Name: MeleeDamage
+    - Name: UnarmedDamage
+    - Name: Mass
+    - Name: VoicePoints
+    - Name: VoiceRate
+    - Name: LeftWeaponSpeedMultiply
+    - Name: DragonSouls
+    - Name: CombatHealthRegenMultiply
+    - Name: DragonRend
+    - Name: AttackDamageMult
+    - Name: HealRateMult
+    - Name: MagickaRateMult
+    - Name: StaminaRateMult
+    - Name: WerewolfPerks
+    - Name: VampirePerks
+    - Name: GrabActorOffset
+    - Name: Grabbed
+    - Name: ReflectDamage
