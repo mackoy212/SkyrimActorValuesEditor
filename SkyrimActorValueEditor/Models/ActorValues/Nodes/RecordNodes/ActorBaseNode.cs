@@ -1,5 +1,4 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes.Base;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes
@@ -8,27 +7,18 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes
     {
         public override float Value
         {
-            get => _accessor.Getter(_npc ?? Record);
-            set
-            {
-                _accessor.Setter(_muttableRecord, value);
-                GameWriter.AddToOverride(_muttableRecord);
-                OnPropertyChanged();
-            }
+            get => _accessor.GetValue(Record);
+            set => _accessor.SetValue(Record, value);
         }
 
         public override bool IsEditable => !Record.Configuration.Flags.HasFlag(NpcConfiguration.Flag.AutoCalcStats);
 
-        private INpc _muttableRecord => _npc ??= Record.DeepCopy();
+        private readonly RecordAccessor<INpcGetter, INpc> _accessor;
 
-        private INpc? _npc;
-
-        private readonly RecordAccessor<INpcGetter, INpc, float> _accessor;
-
-        public ActorBaseNode(string name, INpcGetter record, Func<INpcGetter, float> valueGetter, Action<INpc, float> valueSetter) 
+        public ActorBaseNode(string name, INpcGetter record, RecordAccessor<INpcGetter, INpc> accessor) 
             : base(name, record)
         {
-            _accessor = new (valueGetter, valueSetter);
+            _accessor = accessor;
         }
     }
 }

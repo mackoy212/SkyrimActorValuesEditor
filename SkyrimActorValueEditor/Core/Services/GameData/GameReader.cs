@@ -38,5 +38,26 @@ namespace SkyrimActorValueEditor.Core.Services.GameData
         {
             return _linkCache.TryResolve(link, out record);
         }
+
+        public static T GetOriginalOrOverride<T>(T originalRecord)
+            where T : class, ISkyrimMajorRecordGetter
+        {
+            return _outputMod.EnumerateMajorRecords<T>()
+                    .FirstOrDefault(r => r.FormKey == originalRecord.FormKey)
+                ?? originalRecord;
+        }
+
+        public static TSetter GetAsMuttable<TGetter, TSetter>(TGetter record)
+            where TGetter : class, ISkyrimMajorRecordGetter
+            where TSetter : class, ISkyrimMajorRecord
+        {
+            var fromMod = _outputMod.EnumerateMajorRecords<TSetter>()
+                .FirstOrDefault(r => r.FormKey == record.FormKey);
+
+            if (fromMod != null)
+                return fromMod;
+
+            return GameWriter.GetOrAddAsOverride(record.DeepCopy() as TSetter);
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace SkyrimActorValueEditor.Core.Services.GameData
 {
     public static class GamePlugin
     {
-        public static readonly SkyrimMod OutputMod = GetOrCreateMod("SAVE_ActorsChanges.esp");
+        public static SkyrimMod OutputMod { get; } = GetOrCreateMod("SAVE_ActorsChanges.esp");
 
         private static SkyrimMod GetOrCreateMod(string modName)
         {

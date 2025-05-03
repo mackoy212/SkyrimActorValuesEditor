@@ -1,4 +1,5 @@
 ﻿using Mutagen.Bethesda.Skyrim;
+using SkyrimActorValueEditor.Core.Services.GameData;
 using SkyrimActorValueEditor.ViewModels.Utils;
 
 namespace SkyrimActorValueEditor.Models.Npcs

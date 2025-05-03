@@ -11,7 +11,7 @@ namespace SkyrimActorValueEditor.ViewModels.Utils
             return EncodingUtil.Enc1252ToUTF8(record.Name.String);
         }
 
-        public static string GetConditionData(IConditionGetter condition)
+        /*public static string GetConditionData(IConditionGetter condition)
         {
             string conditionObject = GetConditionObject(condition);
             string conditionOperator = GetConditionCompareOperator(condition);
@@ -23,7 +23,7 @@ namespace SkyrimActorValueEditor.ViewModels.Utils
 
         private static string GetConditionObject(IConditionGetter condition)
         {
-            ISkyrimMajorRecordGetter? conditionObject = condition.Data switch
+*//*            ISkyrimMajorRecordGetter? conditionObject = condition.Data switch
             {
                 IHasPerkConditionDataGetter conditionData => conditionData.Perk.Link.TryResolve(GameReader.LinkCache),
                 IHasMagicEffectConditionDataGetter conditionData => conditionData.MagicEffect.Link.TryResolve(GameReader.LinkCache),
@@ -31,7 +31,7 @@ namespace SkyrimActorValueEditor.ViewModels.Utils
                 _ => null
             };
 
-            return conditionObject?.EditorID?.ToString() ?? "NONE";
+            return conditionObject?.EditorID?.ToString() ?? "NONE";*//*
         }
 
         private static string GetConditionCompareOperator(IConditionGetter condition)
@@ -84,6 +84,6 @@ namespace SkyrimActorValueEditor.ViewModels.Utils
             }
 
             return "AND";
-        }
+        }*/
     }
 }
