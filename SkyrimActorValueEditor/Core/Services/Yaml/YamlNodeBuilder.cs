@@ -1,5 +1,5 @@
-﻿using SkyrimActorValueEditor.Models.ActorValues.Nodes;
-using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
+﻿using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
+using SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes;
 using System.IO;
 using System.Reflection;
 using YamlDotNet.Serialization;

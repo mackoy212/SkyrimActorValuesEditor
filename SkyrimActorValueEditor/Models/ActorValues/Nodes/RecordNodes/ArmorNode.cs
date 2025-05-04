@@ -7,15 +7,15 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes
     {
         public override float Value
         {
-            get => _valueGetter(Record);
+            get => _accessor(Record);
             set { }
         }
 
-        private readonly Func<IArmorGetter, float> _valueGetter;
+        private readonly Func<IArmorGetter, float> _accessor;
 
-        public ArmorNode(IArmorGetter record, Func<IArmorGetter, float>? valueGetter = null) : base(record)
+        public ArmorNode(IArmorGetter record, Func<IArmorGetter, float>? accessor = null) : base(record)
         {
-            _valueGetter = valueGetter ?? (_ => base.Value);
+            _accessor = accessor ?? (_ => base.Value);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
@@ -9,7 +9,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
     {
         public IEnumerable<KeyValuePair<string, TreeNode>> TryBuild(INpcGetter npc)
         {
-            if (GameReader.TryResolve(npc.Class, out var classGetter))
+            if (GameContext.TryResolve(npc.Class, out var classGetter))
                 yield break;
 
             //

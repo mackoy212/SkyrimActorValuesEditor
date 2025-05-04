@@ -1,6 +1,6 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
 using System.Diagnostics.CodeAnalysis;
@@ -19,7 +19,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         private bool TryGetActorValue(IEffectGetter effect, [MaybeNullWhen(false)] out KeyValuePair<string, TreeNode> effectNode)
         {
-            if (GameReader.TryResolve(effect.BaseEffect, out var magicEffect)
+            if (GameContext.TryResolve(effect.BaseEffect, out var magicEffect)
                 && magicEffect.TargetType is TargetType.Self)
             {
                 if (magicEffect.Archetype.Type is MagicEffectArchetype.TypeEnum.PeakValueModifier)

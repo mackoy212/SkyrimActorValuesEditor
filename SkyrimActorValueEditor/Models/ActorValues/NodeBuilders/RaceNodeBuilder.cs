@@ -1,6 +1,6 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
 
@@ -12,7 +12,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         public IEnumerable<KeyValuePair<string, TreeNode>> TryBuild(INpcGetter npc)
         {
-            if (!GameReader.TryResolve(npc.Race, out var race))
+            if (!GameContext.TryResolve(npc.Race, out var race))
                 yield break;
 
             foreach (var spell in GetActorEffects(race))
@@ -63,7 +63,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
             foreach (var spellLink in race.ActorEffect)
             {
-                if (GameReader.TryResolve(spellLink, out var spellRecord)
+                if (GameContext.TryResolve(spellLink, out var spellRecord)
                     && spellRecord is ISpellGetter spell)
                 {
                     yield return spell;

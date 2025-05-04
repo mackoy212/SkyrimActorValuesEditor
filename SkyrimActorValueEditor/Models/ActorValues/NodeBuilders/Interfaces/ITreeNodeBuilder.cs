@@ -1,6 +1,6 @@
 ﻿using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 
-namespace SkyrimActorValueEditor.Models.ActorValues.Interfaces
+namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces
 {
     public interface ITreeNodeBuilder<TSource>
     {

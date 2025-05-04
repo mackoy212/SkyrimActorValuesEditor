@@ -13,9 +13,9 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes
 
         public override bool IsEditable => !Record.Configuration.Flags.HasFlag(NpcConfiguration.Flag.AutoCalcStats);
 
-        private readonly RecordAccessor<INpcGetter, INpc> _accessor;
+        private readonly MajorRecordValueAccessor<INpcGetter, Npc> _accessor;
 
-        public ActorBaseNode(string name, INpcGetter record, RecordAccessor<INpcGetter, INpc> accessor) 
+        public ActorBaseNode(string name, INpcGetter record, MajorRecordValueAccessor<INpcGetter, Npc> accessor) 
             : base(name, record)
         {
             _accessor = accessor;

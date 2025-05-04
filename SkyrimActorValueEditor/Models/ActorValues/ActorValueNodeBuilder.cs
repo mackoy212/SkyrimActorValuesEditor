@@ -1,9 +1,9 @@
 ﻿using Mutagen.Bethesda.Skyrim;
 using SkyrimActorValueEditor.Core.Services.Yaml;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders;
-using SkyrimActorValueEditor.Models.ActorValues.Nodes;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
+using SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes;
 using System.Collections.ObjectModel;
 
 namespace SkyrimActorValueEditor.Models.ActorValues

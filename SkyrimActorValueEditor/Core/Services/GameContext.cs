@@ -6,19 +6,22 @@ using Mutagen.Bethesda.Skyrim;
 using SkyrimActorValueEditor.Models.Npcs;
 using System.Diagnostics.CodeAnalysis;
 
-namespace SkyrimActorValueEditor.Core.Services.GameData
+namespace SkyrimActorValueEditor.Core.Services
 {
-    public static class GameReader
+    public static class GameContext
     {
-        public static ILinkCache<ISkyrimMod, ISkyrimModGetter> LinkCache => _linkCache;
-
         private static readonly IGameEnvironment<ISkyrimMod, ISkyrimModGetter> _environment;
         private static readonly ILinkCache<ISkyrimMod, ISkyrimModGetter> _linkCache;
 
-        private static readonly SkyrimMod _outputMod = GamePlugin.OutputMod;
+        private const string ModName = "SAVE_ActorsChanges.esp";
+        private static readonly SkyrimMod _outputMod;
+        private static readonly string _outputModPath;
 
-        static GameReader()
+        static GameContext()
         {
+            _outputMod = GetOrCreateMod(ModName);
+            _outputModPath = System.IO.Path.Combine(PathService.PathSkyrimData, ModName);
+
             _environment = GameEnvironment.Typical.Builder<ISkyrimMod, ISkyrimModGetter>(GameRelease.SkyrimSE)
                 .TransformLoadOrderListings(mods => mods.Where(mod => mod.Enabled))
                 .WithOutputMod(_outputMod)
@@ -33,7 +36,7 @@ namespace SkyrimActorValueEditor.Core.Services.GameData
                 actors.Add(new NpcModel(npc));
         }
 
-        public static bool TryResolve<TExpected>(IFormLinkGetter<TExpected> link, [MaybeNullWhen(false)] out TExpected record) 
+        public static bool TryResolve<TExpected>(IFormLinkGetter<TExpected> link, [MaybeNullWhen(false)] out TExpected record)
             where TExpected : class, ISkyrimMajorRecordGetter
         {
             return _linkCache.TryResolve(link, out record);
@@ -47,17 +50,29 @@ namespace SkyrimActorValueEditor.Core.Services.GameData
                 ?? originalRecord;
         }
 
-        public static TSetter GetAsMuttable<TGetter, TSetter>(TGetter record)
-            where TGetter : class, ISkyrimMajorRecordGetter
-            where TSetter : class, ISkyrimMajorRecord
+        public static TEditable GetAsOverride<TReadOnly, TEditable>(TReadOnly record)
+            where TReadOnly : class, ISkyrimMajorRecordGetter
+            where TEditable : class, ISkyrimMajorRecord, TReadOnly
         {
-            var fromMod = _outputMod.EnumerateMajorRecords<TSetter>()
-                .FirstOrDefault(r => r.FormKey == record.FormKey);
+            return _outputMod.GetTopLevelGroup<TEditable>()
+                .GetOrAddAsOverride(record);
+        }
 
-            if (fromMod != null)
-                return fromMod;
+        public static void SaveChanges()
+        {
+            _outputMod.WriteToBinary(_outputModPath);
+        }
 
-            return GameWriter.GetOrAddAsOverride(record.DeepCopy() as TSetter);
+        private static SkyrimMod GetOrCreateMod(string modName)
+        {
+            var path = System.IO.Path.Combine(PathService.PathSkyrimData, modName);
+
+            if (System.IO.File.Exists(path))
+            {
+                return SkyrimMod.CreateFromBinary(path, SkyrimRelease.SkyrimSE);
+            }
+
+            return new SkyrimMod(modName, SkyrimRelease.SkyrimSE, 1.7f);
         }
     }
 }

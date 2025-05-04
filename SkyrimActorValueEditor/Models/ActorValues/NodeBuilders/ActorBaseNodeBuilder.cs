@@ -1,5 +1,5 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes.Base;
@@ -23,13 +23,13 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
             foreach (var (actorValue, source, getter, setter) in baseActorValues)
             {
-                var accessor = new RecordAccessor<INpcGetter, INpc>(getter, setter);
+                var accessor = new MajorRecordValueAccessor<INpcGetter, Npc>(getter, setter);
                 yield return new(actorValue, new ActorBaseNode(source, npc, accessor));
             }
 
             foreach (var skill in npc.PlayerSkills.SkillValues.Keys)
             {
-                var accessor = new RecordAccessor<INpcGetter, INpc>(
+                var accessor = new MajorRecordValueAccessor<INpcGetter, Npc>(
                     r => r.PlayerSkills.SkillValues[skill],
                     (r, v) => r.PlayerSkills.SkillValues[skill] = (byte)v
                 );
@@ -38,7 +38,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
             foreach (var skill in npc.PlayerSkills.SkillOffsets.Keys)
             {
-                var accessor = new RecordAccessor<INpcGetter, INpc>(
+                var accessor = new MajorRecordValueAccessor<INpcGetter, Npc>(
                     r => r.PlayerSkills.SkillOffsets[skill],
                     (r, v) => r.PlayerSkills.SkillOffsets[skill] = (byte)v
                 );

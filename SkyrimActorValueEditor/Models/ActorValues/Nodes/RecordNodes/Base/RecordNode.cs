@@ -1,10 +1,10 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes.Base
 {
-    public abstract class RecordNode<T> : TreeNode, IRecordNode<T> where T : ISkyrimMajorRecordGetter
+    public abstract class RecordNode<T> : TreeNode
+        where T : ISkyrimMajorRecordGetter
     {
         public T Record { get; }
 

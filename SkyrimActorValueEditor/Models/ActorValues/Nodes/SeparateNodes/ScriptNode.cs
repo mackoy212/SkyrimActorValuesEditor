@@ -1,6 +1,6 @@
 ﻿using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 
-namespace SkyrimActorValueEditor.Models.ActorValues.Nodes
+namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes
 {
     public class ScriptNode : TreeNode
     {

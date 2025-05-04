@@ -1,6 +1,6 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
 
@@ -39,7 +39,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
             foreach (var effect in perk.Effects)
             {
                 if (effect is IPerkAbilityEffectGetter perkAbilityEffect
-                    && GameReader.TryResolve(perkAbilityEffect.Ability, out var spell))
+                    && GameContext.TryResolve(perkAbilityEffect.Ability, out var spell))
                 {
                     yield return spell;
                 }
@@ -53,7 +53,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
             foreach (var perkPlacement in npc.Perks)
             {
-                if (GameReader.TryResolve(perkPlacement.Perk, out var perk))
+                if (GameContext.TryResolve(perkPlacement.Perk, out var perk))
                 {
                     yield return perk;
                 }

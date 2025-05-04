@@ -1,6 +1,5 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.ViewModels.Utils;
+using SkyrimActorValueEditor.Core.Extensions;
 
 namespace SkyrimActorValueEditor.Models.Npcs
 {
@@ -9,7 +8,7 @@ namespace SkyrimActorValueEditor.Models.Npcs
         public INpcGetter NPC => _npc;
         public string FormKey => _npc.FormKey.ToString();
         public string? EditorID => _npc.EditorID;
-        public string? Name => RecordUtil.GetName(_npc);
+        public string? Name => _npc.GetName();
 
         private readonly INpcGetter _npc;
 

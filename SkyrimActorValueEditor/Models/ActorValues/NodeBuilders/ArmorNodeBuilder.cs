@@ -1,10 +1,9 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
 using System.Diagnostics.CodeAnalysis;
-using static Mutagen.Bethesda.Skyrim.Package;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 {
@@ -40,12 +39,12 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         private static IEnumerable<IArmorGetter> GetArmors(INpcGetter npc)
         {
-            if (!GameReader.TryResolve(npc.DefaultOutfit, out var outfit) || outfit.Items == null)
+            if (!GameContext.TryResolve(npc.DefaultOutfit, out var outfit) || outfit.Items == null)
                 yield break;
 
             foreach (var outfitTargetLink in outfit.Items)
             {
-                if (GameReader.TryResolve(outfitTargetLink, out var outfitTarget)
+                if (GameContext.TryResolve(outfitTargetLink, out var outfitTarget)
                     && outfitTarget is IArmorGetter armor)
                 {
                     yield return armor;
@@ -55,7 +54,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         private static bool TryGetEnchantment(IArmorGetter armor, [MaybeNullWhen(false)] out IObjectEffectGetter enchantment)
         {
-            enchantment = GameReader.TryResolve(armor.ObjectEffect, out var effectRecord)
+            enchantment = GameContext.TryResolve(armor.ObjectEffect, out var effectRecord)
                 ? effectRecord as IObjectEffectGetter
                 : null;
 

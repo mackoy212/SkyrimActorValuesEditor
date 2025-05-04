@@ -1,4 +1,4 @@
-﻿using SkyrimActorValueEditor.Core.Services.GameData;
+﻿using SkyrimActorValueEditor.Core.Services;
 using SkyrimActorValueEditor.Models.ActorValues;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.Npcs;
@@ -42,7 +42,7 @@ namespace SkyrimActorValueEditor.ViewModels
 
         public MainWindowViewModel()
         {
-            GameReader.LoadNPCs(_allActors);
+            GameContext.LoadNPCs(_allActors);
             ActorValueNodeBuilder.LoadActorValues(ActorValueTreeNodes);
 
             foreach (var actor in _allActors)
@@ -53,7 +53,7 @@ namespace SkyrimActorValueEditor.ViewModels
                 string filter = param as string ?? string.Empty;
                 ApplyFilter(filter);
             });
-            SaveChanges = new RelayCommand(_ => GameWriter.SaveChanges());
+            SaveChanges = new RelayCommand(_ => GameContext.SaveChanges());
             CopyFormKey = new RelayCommand(_ => CopyToClipboard(SelectedActor?.FormKey));
             CopyEditorID = new RelayCommand(_ => CopyToClipboard(SelectedActor?.EditorID));
             CopyName = new RelayCommand(_ => CopyToClipboard(SelectedActor?.Name));
@@ -77,7 +77,7 @@ namespace SkyrimActorValueEditor.ViewModels
                 FilteredActors.Add(actor);
         }
 
-        private void CopyToClipboard(string? text)
+        private static void CopyToClipboard(string? text)
         {
             Clipboard.SetText(text);
         }

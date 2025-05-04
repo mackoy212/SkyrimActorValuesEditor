@@ -1,6 +1,6 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
-using SkyrimActorValueEditor.Models.ActorValues.Interfaces;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
@@ -27,7 +27,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
             foreach (var spellLink in npc.ActorEffect)
             {
-                if (GameReader.TryResolve(spellLink, out var spellRecord)
+                if (GameContext.TryResolve(spellLink, out var spellRecord)
                     && spellRecord is ISpellGetter spell)
                 {
                     yield return spell;

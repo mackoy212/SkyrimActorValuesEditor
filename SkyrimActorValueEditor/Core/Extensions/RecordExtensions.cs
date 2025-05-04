@@ -1,15 +1,17 @@
 ﻿using Mutagen.Bethesda.Plugins.Aspects;
-using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Core.Services.GameData;
+using SkyrimActorValueEditor.ViewModels.Utils;
 
-namespace SkyrimActorValueEditor.ViewModels.Utils
+namespace SkyrimActorValueEditor.Core.Extensions
 {
-    public static class RecordUtil
+    public static class RecordExtensions
     {
-        public static string? GetName<T>(T record) where T : ITranslatedNamedRequiredGetter
+        public static string? GetName<T>(this T record)
+            where T : ITranslatedNamedRequiredGetter
         {
-            return EncodingUtil.Enc1252ToUTF8(record.Name.String);
+            return EncodingUtils.Convert1252ToUTF8(record.Name.String);
         }
+
+        #region Conditions
 
         /*public static string GetConditionData(IConditionGetter condition)
         {
@@ -25,9 +27,9 @@ namespace SkyrimActorValueEditor.ViewModels.Utils
         {
 *//*            ISkyrimMajorRecordGetter? conditionObject = condition.Data switch
             {
-                IHasPerkConditionDataGetter conditionData => conditionData.Perk.Link.TryResolve(GameReader.LinkCache),
-                IHasMagicEffectConditionDataGetter conditionData => conditionData.MagicEffect.Link.TryResolve(GameReader.LinkCache),
-                IWornHasKeywordConditionDataGetter conditionData => conditionData.Keyword.Link.TryResolve(GameReader.LinkCache),
+                IHasPerkConditionDataGetter conditionData => conditionData.Perk.Link.TryResolve(GameContext.LinkCache),
+                IHasMagicEffectConditionDataGetter conditionData => conditionData.MagicEffect.Link.TryResolve(GameContext.LinkCache),
+                IWornHasKeywordConditionDataGetter conditionData => conditionData.Keyword.Link.TryResolve(GameContext.LinkCache),
                 _ => null
             };
 
@@ -85,5 +87,7 @@ namespace SkyrimActorValueEditor.ViewModels.Utils
 
             return "AND";
         }*/
+
+        #endregion
     }
 }

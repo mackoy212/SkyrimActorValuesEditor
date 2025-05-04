@@ -55,11 +55,9 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Base
         public void UpdateValue()
         {
             foreach (var treeNode in Children)
-            {
                 treeNode.UpdateValue();
-            }
 
-            _value = Children.Sum(x => x.Value);
+            _value = (float)Math.Round(Children.Sum(x => x.Value), 4);
             OnPropertyChanged(nameof(Value));
         }
     }
