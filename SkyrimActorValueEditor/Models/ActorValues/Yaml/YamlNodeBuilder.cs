@@ -5,7 +5,7 @@ using System.Reflection;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace SkyrimActorValueEditor.Core.Services.Yaml
+namespace SkyrimActorValueEditor.Models.ActorValues.Yaml
 {
     public class YamlNodeBuilder
     {

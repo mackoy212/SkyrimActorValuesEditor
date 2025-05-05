@@ -1,5 +1,6 @@
 ﻿using Mutagen.Bethesda;
 using Mutagen.Bethesda.Environments;
+using Mutagen.Bethesda.Installs;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Skyrim;
@@ -14,13 +15,19 @@ namespace SkyrimActorValueEditor.Core.Services
         private static readonly ILinkCache<ISkyrimMod, ISkyrimModGetter> _linkCache;
 
         private const string ModName = "SAVE_ActorsChanges.esp";
+        private static readonly string _pathSkyrimData;
+        private static readonly string _pathOutputMod;
+
         private static readonly SkyrimMod _outputMod;
-        private static readonly string _outputModPath;
 
         static GameContext()
         {
+            if (!GameLocations.TryGetDataFolder(GameRelease.SkyrimSE, out var pathSkyrimData))
+                throw new Exception("Skyrim SE is not installed.");
+
+            _pathSkyrimData = pathSkyrimData;
             _outputMod = GetOrCreateMod(ModName);
-            _outputModPath = System.IO.Path.Combine(PathService.PathSkyrimData, ModName);
+            _pathOutputMod = System.IO.Path.Combine(_pathSkyrimData, ModName);
 
             _environment = GameEnvironment.Typical.Builder<ISkyrimMod, ISkyrimModGetter>(GameRelease.SkyrimSE)
                 .TransformLoadOrderListings(mods => mods.Where(mod => mod.Enabled))
@@ -60,12 +67,12 @@ namespace SkyrimActorValueEditor.Core.Services
 
         public static void SaveChanges()
         {
-            _outputMod.WriteToBinary(_outputModPath);
+            _outputMod.WriteToBinary(_pathOutputMod);
         }
 
         private static SkyrimMod GetOrCreateMod(string modName)
         {
-            var path = System.IO.Path.Combine(PathService.PathSkyrimData, modName);
+            var path = System.IO.Path.Combine(_pathSkyrimData, modName);
 
             if (System.IO.File.Exists(path))
             {

@@ -21,7 +21,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
         {
             if (GameContext.TryResolve(effect.BaseEffect, out var magicEffect)
                 && magicEffect.TargetType is TargetType.Self)
-            {
+            {               
                 if (magicEffect.Archetype.Type is MagicEffectArchetype.TypeEnum.PeakValueModifier)
                 {
                     effectNode = new(
@@ -36,4 +36,23 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
             return false;
         }
     }
+
+    #region forFuture
+
+    /*                else if (magicEffect.Archetype.Type is MagicEffectArchetype.TypeEnum.DualValueModifier
+                    && !magicEffect.Flags.HasFlag(MagicEffect.Flag.Recover))
+                {
+                    effectNode = new(
+                        magicEffect.Archetype.ActorValue.ToString(),
+                        new EffectNode(magicEffect, effect)
+                    );
+                    effectNode = new(
+                        magicEffect.SecondActorValue.ToString(),
+                        new EffectNode(magicEffect, effect)
+                    );
+                    return true;
+                }*/
+
+    #endregion
+
 }

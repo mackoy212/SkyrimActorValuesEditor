@@ -7,14 +7,27 @@
     - Name: Magicka
     - Name: Stamina
 
-- Name: AI Data
-  Children:
-    - Name: Aggression
-    - Name: Confidence
-    - Name: Energy
-    - Name: Morality
-    - Name: Mood
-    - Name: Assistance
+#- Name: AI Data
+#  Children:
+#    - Name: Aggression
+#    - Name: Confidence
+#    - Name: Energy
+#    - Name: Morality
+#    - Name: Mood
+#    - Name: Assistance
+#
+#- Name: Variables
+#  Children:
+#    - Name: Variable01
+#    - Name: Variable02
+#    - Name: Variable03
+#    - Name: Variable04
+#    - Name: Variable05
+#    - Name: Variable06
+#    - Name: Variable07
+#    - Name: Variable08
+#    - Name: Variable09
+#    - Name: Variable10
 
 - Name: Skills
   Children:
@@ -133,19 +146,6 @@
         - Name: SneakingSkillAdvance
         - Name: AlchemySkillAdvance
         - Name: SpeechcraftSkillAdvance
-  
-- Name: Variables
-  Children:
-    - Name: Variable01
-    - Name: Variable02
-    - Name: Variable03
-    - Name: Variable04
-    - Name: Variable05
-    - Name: Variable06
-    - Name: Variable07
-    - Name: Variable08
-    - Name: Variable09
-    - Name: Variable10  
   
 - Name: Other
   Children:
