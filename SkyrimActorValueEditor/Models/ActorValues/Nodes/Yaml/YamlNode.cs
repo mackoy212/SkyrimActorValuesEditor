@@ -1,4 +1,4 @@
-﻿namespace SkyrimActorValueEditor.Models.ActorValues.Yaml
+﻿namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Yaml
 {
     public class YamlNode
     {
