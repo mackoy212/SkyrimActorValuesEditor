@@ -12,7 +12,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues
     {
         private static readonly Dictionary<string, ITreeNodeBuilder<INpcGetter>> _nodeBuilders = new()
         {
-            { "Actor Effects", new ActorEffectBuilder() },
+            { "Actor Effects", new ActorEffectNodeBuilder() },
             { "Armor", new ArmorNodeBuilder() },
             { "Perks", new PerkNodeBuilder() },
             { "ActorBase", new ActorBaseNodeBuilder() },

@@ -5,7 +5,7 @@ using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 {
-    public class ActorEffectBuilder : ITreeNodeBuilder<INpcGetter>
+    public class ActorEffectNodeBuilder : ITreeNodeBuilder<INpcGetter>
     {
         private readonly SpellNodeBuilder _spellNodeBuilder = new();
 
