@@ -3,7 +3,7 @@ using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders;
 using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes;
-using SkyrimActorValueEditor.Models.ActorValues.Yaml;
+using SkyrimActorValueEditor.Models.ActorValues.Nodes.Yaml;
 using System.Collections.ObjectModel;
 
 namespace SkyrimActorValueEditor.Models.ActorValues
@@ -19,8 +19,8 @@ namespace SkyrimActorValueEditor.Models.ActorValues
             { "Race", new RaceNodeBuilder() }
         };
 
-        private static List<TreeNode> _categoryNodes;
-        private static Dictionary<string, ActorValueNode> _actorValuesNodesDictionary;
+        private static readonly List<TreeNode> _categoryNodes;
+        private static readonly Dictionary<string, ActorValueNode> _actorValuesNodesDictionary;
 
         static ActorValueNodeBuilder()
         {
