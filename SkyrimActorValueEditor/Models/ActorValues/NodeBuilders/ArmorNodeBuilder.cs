@@ -31,10 +31,14 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
                     }
                 }
 
-                armorNodes["DamageResist"] = new ArmorNode(armor, r => r.ArmorRating);
+                yield return new(
+                    "DamageResist",
+                    new ArmorNode(armor, r => r.ArmorRating)
+                );
             }
 
-            return armorNodes;
+            foreach (var kvp in armorNodes)
+                yield return kvp;
         }
 
         private static IEnumerable<IArmorGetter> GetArmors(INpcGetter npc)
