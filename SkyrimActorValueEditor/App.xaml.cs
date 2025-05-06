@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using SkyrimActorValueEditor.Core.Services;
+using System.Runtime.InteropServices;
+using System.Windows;
 
 namespace SkyrimActorValueEditor
 {
@@ -7,6 +9,15 @@ namespace SkyrimActorValueEditor
     /// </summary>
     public partial class App : Application
     {
+        [DllImport("Kernel32")]
+        private static extern void AllocConsole();
 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            if (ConfigService.Get().Debug)
+                AllocConsole();
+        }
     }
 }

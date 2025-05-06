@@ -8,12 +8,8 @@ namespace SkyrimActorValueEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        [DllImport("Kernel32")]
-        private static extern void AllocConsole();
-
         public MainWindow()
         {
-            AllocConsole();
             InitializeComponent();
         }
     }

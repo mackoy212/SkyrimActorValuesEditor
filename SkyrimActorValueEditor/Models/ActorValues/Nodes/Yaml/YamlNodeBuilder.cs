@@ -1,9 +1,6 @@
-﻿using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
+﻿using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes;
-using System.IO;
-using System.Reflection;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Yaml
 {
@@ -14,9 +11,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Yaml
 
         public (List<TreeNode>, Dictionary<string, ActorValueNode>) LoadActorValues()
         {
-            var yamlNodes = CreateYamlTree("SkyrimActorValueEditor.Resources.ActorValues.yaml");
-
-            foreach (var yamlNode in yamlNodes)
+            foreach (var yamlNode in CreateYamlTree("ActorValues.yaml"))
             {
                 var treeNode = Convert(yamlNode);
                 _categoryNodes.Add(treeNode);
@@ -29,39 +24,28 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Yaml
         {
             if (yamlNode.Children?.Count > 0)
             {
-                var node = new CategoryNode(yamlNode.Name!);
+                var categoryNode = new CategoryNode(yamlNode.Name!);
 
-                foreach (var child in yamlNode.Children)
+                foreach (var childYamlNode in yamlNode.Children)
                 {
-                    var treeNode = Convert(child);
-                    node.AddNode(treeNode);
+                    var childNode = Convert(childYamlNode);
+                    categoryNode.AddNode(childNode);
                 }
 
-                return node;
+                return categoryNode;
             }
             else
             {
-                var node = new ActorValueNode(yamlNode.Name!);
-                _actorValuesNodesDictionary.Add(node.Name, node);
+                var actorValueNode = new ActorValueNode(yamlNode.Name!);
+                _actorValuesNodesDictionary.Add(actorValueNode.Name, actorValueNode);
 
-                return node;
+                return actorValueNode;
             }
         }
 
         private static List<YamlNode> CreateYamlTree(string path)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-
-            using var stream = assembly.GetManifestResourceStream(path);
-            using var reader = new StreamReader(stream!);
-
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(PascalCaseNamingConvention.Instance)
-                .Build();
-
-            var yaml = reader.ReadToEnd();
-
-            return deserializer.Deserialize<List<YamlNode>>(yaml);
+            return YamlService.Load<List<YamlNode>>(path);
         }
     }
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <None Remove="Core\Services\ActorValues.yaml" />
+    <None Remove="Resources\Settings.yaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +32,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\ActorValues.yaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Settings.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
