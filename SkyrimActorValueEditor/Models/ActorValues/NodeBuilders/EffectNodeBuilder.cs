@@ -8,7 +8,7 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 {
     public class EffectNodeBuilder : ITreeNodeBuilder<IEffectGetter>
     {
-        private readonly ScriptNodeBuilder _scriptNodeBuilder = new();
+        //private readonly ScriptNodeBuilder _scriptNodeBuilder = new();
 
         public IEnumerable<KeyValuePair<string, TreeNode>> TryBuild(IEffectGetter effect)
         {
