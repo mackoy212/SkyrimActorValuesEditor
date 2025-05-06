@@ -3,7 +3,6 @@ using SkyrimActorValueEditor.Core.Services;
 using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.RecordNodes;
-using System.Diagnostics.CodeAnalysis;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 {
@@ -13,46 +12,25 @@ namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
 
         public IEnumerable<KeyValuePair<string, TreeNode>> TryBuild(IEffectGetter effect)
         {
-            if (TryGetActorValue(effect, out var node))
-                yield return node;
-        }
+            if (!GameContext.TryResolve(effect.BaseEffect, out var magicEffect))
+                yield break;
 
-        private bool TryGetActorValue(IEffectGetter effect, [MaybeNullWhen(false)] out KeyValuePair<string, TreeNode> effectNode)
-        {
-            if (GameContext.TryResolve(effect.BaseEffect, out var magicEffect)
-                && magicEffect.TargetType is TargetType.Self)
-            {               
-                if (magicEffect.Archetype.Type is MagicEffectArchetype.TypeEnum.PeakValueModifier)
-                {
-                    effectNode = new(
+            if (magicEffect.TargetType is not TargetType.Self)
+                yield break;
+
+            if (magicEffect.Archetype.ActorValue is ActorValue.None)
+                yield break;
+
+            switch (magicEffect.Archetype.Type)
+            {
+                case MagicEffectArchetype.TypeEnum.PeakValueModifier:
+                case MagicEffectArchetype.TypeEnum.ValueModifier when magicEffect.Flags.HasFlag(MagicEffect.Flag.Recover):
+                    yield return new(
                         magicEffect.Archetype.ActorValue.ToString(),
                         new EffectNode(magicEffect, effect)
                     );
-                    return true;
-                }
+                    break;
             }
-
-            effectNode = default;
-            return false;
         }
     }
-
-    #region forFuture
-
-    /*                else if (magicEffect.Archetype.Type is MagicEffectArchetype.TypeEnum.DualValueModifier
-                    && !magicEffect.Flags.HasFlag(MagicEffect.Flag.Recover))
-                {
-                    effectNode = new(
-                        magicEffect.Archetype.ActorValue.ToString(),
-                        new EffectNode(magicEffect, effect)
-                    );
-                    effectNode = new(
-                        magicEffect.SecondActorValue.ToString(),
-                        new EffectNode(magicEffect, effect)
-                    );
-                    return true;
-                }*/
-
-    #endregion
-
 }
