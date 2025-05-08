@@ -17,7 +17,6 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Base
 
         public virtual bool IsEditable => false;
 
-        public TreeNode? Parent { get; private set; }
         public ObservableCollection<TreeNode> Children { get; } = new();
 
         private float _value;
@@ -27,19 +26,15 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Base
             Name = name;
         }
 
-        public virtual void AddNode(TreeNode node)
+        public void AddNode(TreeNode node)
         {
-            node.Parent = this;
             Children.Add(node);
         }
 
-        public virtual void ClearNode()
+        public void ClearNode()
         {
             foreach (var node in Children)
-            {
-                node.Parent = null;
                 node.ClearNode();
-            }
 
             Children.Clear();
         }
