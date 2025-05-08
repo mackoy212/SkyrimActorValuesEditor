@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Windows;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
