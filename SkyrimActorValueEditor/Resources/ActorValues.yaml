@@ -6,28 +6,16 @@
     - Name: Health
     - Name: Magicka
     - Name: Stamina
+    - Name: SpeedMult
 
-#- Name: AI Data
-#  Children:
-#    - Name: Aggression
-#    - Name: Confidence
-#    - Name: Energy
-#    - Name: Morality
-#    - Name: Mood
-#    - Name: Assistance
-#
-#- Name: Variables
-#  Children:
-#    - Name: Variable01
-#    - Name: Variable02
-#    - Name: Variable03
-#    - Name: Variable04
-#    - Name: Variable05
-#    - Name: Variable06
-#    - Name: Variable07
-#    - Name: Variable08
-#    - Name: Variable09
-#    - Name: Variable10
+- Name: Rates
+  Children:
+    - Name: HealRate
+    - Name: MagickaRate
+    - Name: StaminaRate
+    - Name: HealRateMult
+    - Name: MagickaRateMult
+    - Name: StaminaRateMult
 
 - Name: Skills
   Children:
@@ -65,6 +53,7 @@
     - Name: ResistFrost
     - Name: ResistMagic
     - Name: ResistDisease
+    - Name: AbsorbChance    
 
 - Name: Modifiers
   Children:
@@ -168,7 +157,6 @@
     - Name: FavorsPerDay
     - Name: FavorsPerDayTimer
     - Name: LeftItemCharge
-    - Name: AbsorbChance
     - Name: Blindness
     - Name: WeaponSpeedMult
     - Name: ShoutRecoveryMult
@@ -181,10 +169,6 @@
     - Name: BypassVendorStolenCheck
     - Name: BypassVendorKeywordCheck
     - Name: WaitingForPlayer
-    - Name: HealRate
-    - Name: MagickaRate
-    - Name: StaminaRate
-    - Name: SpeedMult
     - Name: InventoryWeight
     - Name: CarryWeight
     - Name: CriticalChance
@@ -198,11 +182,31 @@
     - Name: CombatHealthRegenMultiply
     - Name: DragonRend
     - Name: AttackDamageMult
-    - Name: HealRateMult
-    - Name: MagickaRateMult
-    - Name: StaminaRateMult
     - Name: WerewolfPerks
     - Name: VampirePerks
     - Name: GrabActorOffset
     - Name: Grabbed
     - Name: ReflectDamage
+
+# Unused
+#- Name: AI Data
+#  Children:
+#    - Name: Aggression
+#    - Name: Confidence
+#    - Name: Energy
+#    - Name: Morality
+#    - Name: Mood
+#    - Name: Assistance
+#
+#- Name: Variables
+#  Children:
+#    - Name: Variable01
+#    - Name: Variable02
+#    - Name: Variable03
+#    - Name: Variable04
+#    - Name: Variable05
+#    - Name: Variable06
+#    - Name: Variable07
+#    - Name: Variable08
+#    - Name: Variable09
+#    - Name: Variable10
