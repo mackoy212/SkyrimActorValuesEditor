@@ -3,7 +3,7 @@ using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes;
 
-namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders
+namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Unused
 {
     public class ScriptNodeBuilder : ITreeNodeBuilder<IScriptedGetter>
     {
