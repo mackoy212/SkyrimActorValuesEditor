@@ -1,4 +1,6 @@
 ﻿using Mutagen.Bethesda.Plugins.Aspects;
+using Mutagen.Bethesda.Skyrim;
+using SkyrimActorValueEditor.Core.Services;
 using SkyrimActorValueEditor.ViewModels.Utils;
 
 namespace SkyrimActorValueEditor.Core.Extensions
@@ -10,10 +12,7 @@ namespace SkyrimActorValueEditor.Core.Extensions
         {
             return EncodingUtils.Convert1252ToUTF8(record.Name.String);
         }
-
-        #region Conditions
-
-        /*public static string GetConditionData(IConditionGetter condition)
+        public static string ToDisplayString(this IConditionGetter condition)
         {
             string conditionObject = GetConditionObject(condition);
             string conditionOperator = GetConditionCompareOperator(condition);
@@ -23,17 +22,28 @@ namespace SkyrimActorValueEditor.Core.Extensions
             return $"{condition.Data.RunOnType}.{condition.Data.Function} {conditionObject} {conditionOperator} {value} {flag}";
         }
 
+        #region Conditions
+
         private static string GetConditionObject(IConditionGetter condition)
         {
-*//*            ISkyrimMajorRecordGetter? conditionObject = condition.Data switch
+            ISkyrimMajorRecordGetter? conditionObject = condition.Data switch
             {
-                IHasPerkConditionDataGetter conditionData => conditionData.Perk.Link.TryResolve(GameContext.LinkCache),
-                IHasMagicEffectConditionDataGetter conditionData => conditionData.MagicEffect.Link.TryResolve(GameContext.LinkCache),
-                IWornHasKeywordConditionDataGetter conditionData => conditionData.Keyword.Link.TryResolve(GameContext.LinkCache),
+                IHasPerkConditionDataGetter conditionData =>
+                    GameContext.TryResolve(conditionData.Perk.Link, out var perk) ? perk : null,
+
+                IHasMagicEffectConditionDataGetter conditionData =>
+                    GameContext.TryResolve(conditionData.MagicEffect.Link, out var effect) ? effect : null,
+
+                IWornHasKeywordConditionDataGetter conditionData =>
+                    GameContext.TryResolve(conditionData.Keyword.Link, out var keyword) ? keyword : null,
+
+                IHasKeywordConditionDataGetter conditionData =>
+                    GameContext.TryResolve(conditionData.Keyword.Link, out var keyword) ? keyword : null,
+
                 _ => null
             };
 
-            return conditionObject?.EditorID?.ToString() ?? "NONE";*//*
+            return conditionObject?.EditorID?.ToString() ?? "NONE";
         }
 
         private static string GetConditionCompareOperator(IConditionGetter condition)
@@ -86,7 +96,7 @@ namespace SkyrimActorValueEditor.Core.Extensions
             }
 
             return "AND";
-        }*/
+        }
 
         #endregion
     }
