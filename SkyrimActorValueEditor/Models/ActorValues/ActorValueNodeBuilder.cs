@@ -1,9 +1,11 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders;
+using SkyrimActorValueEditor.Core.Services;
+using SkyrimActorValueEditor.Core.Services.Yaml;
+using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Builders;
 using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
-using SkyrimActorValueEditor.Models.ActorValues.Nodes.SeparateNodes;
-using SkyrimActorValueEditor.Models.ActorValues.Nodes.Yaml;
+using SkyrimActorValueEditor.Models.ActorValues.Nodes.Separate;
+using SkyrimActorValueEditor.Models.Npcs;
 using System.Collections.ObjectModel;
 
 namespace SkyrimActorValueEditor.Models.ActorValues
@@ -14,9 +16,9 @@ namespace SkyrimActorValueEditor.Models.ActorValues
         {
             { "Actor Effects", new ActorEffectNodeBuilder() },
             { "Armor", new ArmorNodeBuilder() },
-            { "Perks", new PerkNodeBuilder() },
             { "ActorBase", new ActorBaseNodeBuilder() },
-            { "Race", new RaceNodeBuilder() }
+            { "Race", new RaceNodeBuilder() },
+            { "Perks", new PerkNodeBuilder() }
         };
 
         private static readonly List<TreeNode> _categoryNodes;
@@ -37,16 +39,16 @@ namespace SkyrimActorValueEditor.Models.ActorValues
                 actorValuesNodesView.Add(node);
         }
 
-        public static void UpdateActorValues(INpcGetter npc)
+        public static void UpdateActorValues(NpcModel npcModel)
         {
             foreach (var treeNode in _actorValuesNodesDictionary.Values)
                 treeNode.ClearNode();
 
-            foreach (var (key, treeNode) in GetActorValues(npc))
+            foreach (var (key, treeNode) in GetActorValues(NpcService.GetNpcWithTemplates(npcModel)))
                 _actorValuesNodesDictionary[key].AddNode(treeNode);
 
             foreach (var treeNode in _categoryNodes)
-                treeNode.UpdateValue();
+                treeNode.UpdateValuesToDepth();
         }
 
         private static IEnumerable<KeyValuePair<string, TreeNode>> GetActorValues(INpcGetter npc)

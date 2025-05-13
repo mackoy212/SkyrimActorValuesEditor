@@ -4,7 +4,6 @@ using Mutagen.Bethesda.Installs;
 using Mutagen.Bethesda.Plugins;
 using Mutagen.Bethesda.Plugins.Cache;
 using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Models.Npcs;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SkyrimActorValueEditor.Core.Services
@@ -14,10 +13,9 @@ namespace SkyrimActorValueEditor.Core.Services
         private static readonly IGameEnvironment<ISkyrimMod, ISkyrimModGetter> _environment;
         private static readonly ILinkCache<ISkyrimMod, ISkyrimModGetter> _linkCache;
 
-        private const string ModName = "SAVE_ActorsChanges.esp";
-        private static readonly string _pathSkyrimData;
-        private static readonly string _pathOutputMod;
-
+        private const string _modName = "SAVE_ActorsChanges.esp";
+        private static readonly string _skyrimDataPath;
+        private static readonly string _outputModPath;
         private static readonly SkyrimMod _outputMod;
 
         static GameContext()
@@ -25,9 +23,9 @@ namespace SkyrimActorValueEditor.Core.Services
             if (!GameLocations.TryGetDataFolder(GameRelease.SkyrimSE, out var pathSkyrimData))
                 throw new Exception("Skyrim SE is not installed.");
 
-            _pathSkyrimData = pathSkyrimData;
-            _outputMod = GetOrCreateMod(ModName);
-            _pathOutputMod = System.IO.Path.Combine(_pathSkyrimData, ModName);
+            _skyrimDataPath = pathSkyrimData;
+            _outputMod = GetOrCreateMod(_modName);
+            _outputModPath = System.IO.Path.Combine(_skyrimDataPath, _modName);
 
             _environment = GameEnvironment.Typical.Builder<ISkyrimMod, ISkyrimModGetter>(GameRelease.SkyrimSE)
                 .TransformLoadOrderListings(mods => mods.Where(mod => mod.Enabled))
@@ -37,10 +35,10 @@ namespace SkyrimActorValueEditor.Core.Services
             _linkCache = _environment.LinkCache;
         }
 
-        public static void LoadNPCs(List<NpcModel> actors)
+        public static IEnumerable<INpcGetter> LoadNPCs()
         {
             foreach (var npc in _environment.LoadOrder.PriorityOrder.Npc().WinningOverrides())
-                actors.Add(new NpcModel(npc));
+                yield return npc;
         }
 
         public static bool TryResolve<TExpected>(IFormLinkGetter<TExpected> link, [MaybeNullWhen(false)] out TExpected record)
@@ -67,12 +65,12 @@ namespace SkyrimActorValueEditor.Core.Services
 
         public static void SaveChanges()
         {
-            _outputMod.WriteToBinary(_pathOutputMod);
+            _outputMod.WriteToBinary(_outputModPath);
         }
 
         private static SkyrimMod GetOrCreateMod(string modName)
         {
-            var path = System.IO.Path.Combine(_pathSkyrimData, modName);
+            var path = System.IO.Path.Combine(_skyrimDataPath, modName);
 
             if (System.IO.File.Exists(path))
             {

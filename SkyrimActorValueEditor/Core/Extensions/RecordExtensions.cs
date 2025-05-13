@@ -26,45 +26,50 @@ namespace SkyrimActorValueEditor.Core.Extensions
 
         private static string GetConditionObject(IConditionGetter condition)
         {
-            ISkyrimMajorRecordGetter? conditionObject = condition.Data switch
+            string? conditionObject = condition.Data switch
             {
                 IHasPerkConditionDataGetter conditionData =>
-                    GameContext.TryResolve(conditionData.Perk.Link, out var perk) ? perk : null,
+                    GameContext.TryResolve(conditionData.Perk.Link, out var perk) ? perk.EditorID : null,
 
                 IHasMagicEffectConditionDataGetter conditionData =>
-                    GameContext.TryResolve(conditionData.MagicEffect.Link, out var effect) ? effect : null,
+                    GameContext.TryResolve(conditionData.MagicEffect.Link, out var effect) ? effect.EditorID : null,
 
                 IWornHasKeywordConditionDataGetter conditionData =>
-                    GameContext.TryResolve(conditionData.Keyword.Link, out var keyword) ? keyword : null,
+                    GameContext.TryResolve(conditionData.Keyword.Link, out var keyword) ? keyword.EditorID : null,
 
                 IHasKeywordConditionDataGetter conditionData =>
-                    GameContext.TryResolve(conditionData.Keyword.Link, out var keyword) ? keyword : null,
+                    GameContext.TryResolve(conditionData.Keyword.Link, out var keyword) ? keyword.EditorID : null,
+
+                IHasSpellConditionDataGetter conditionData =>
+                    GameContext.TryResolve(conditionData.Spell.Link, out var spell) ? spell.EditorID : null,
+
+                IGetEquippedItemTypeConditionDataGetter conditionData =>
+                    conditionData.ItemSource.ToString(),
+
+                IGetPCMiscStatConditionDataGetter conditionData =>
+                    conditionData.MiscStat.ToString(),
+
+                IGetActorValuePercentConditionDataGetter conditionData =>
+                    conditionData.ActorValue.ToString(),
 
                 _ => null
             };
 
-            return conditionObject?.EditorID?.ToString() ?? "NONE";
+            return conditionObject ?? "NONE";
         }
 
         private static string GetConditionCompareOperator(IConditionGetter condition)
         {
-            switch (condition.CompareOperator)
+            return condition.CompareOperator switch
             {
-                case CompareOperator.EqualTo:
-                    return "==";
-                case CompareOperator.NotEqualTo:
-                    return "!=";
-                case CompareOperator.GreaterThan:
-                    return ">";
-                case CompareOperator.GreaterThanOrEqualTo:
-                    return ">=";
-                case CompareOperator.LessThan:
-                    return "<";
-                case CompareOperator.LessThanOrEqualTo:
-                    return "<=";
-                default:
-                    return string.Empty;
-            }
+                CompareOperator.EqualTo => "==",
+                CompareOperator.NotEqualTo => "!=",
+                CompareOperator.GreaterThan => ">",
+                CompareOperator.GreaterThanOrEqualTo => ">=",
+                CompareOperator.LessThan => "<",
+                CompareOperator.LessThanOrEqualTo => "<=",
+                _ => string.Empty,
+            };
         }
 
         private static float GetConditionValue(IConditionGetter condition)

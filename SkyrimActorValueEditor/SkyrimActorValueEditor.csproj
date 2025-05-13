@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <None Remove="Core\Services\ActorValues.yaml" />
+    <None Remove="Resources\Secrets.yaml" />
     <None Remove="Resources\Settings.yaml" />
   </ItemGroup>
 
@@ -26,7 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.49.0" />
+    <PackageReference Include="CoreCLR-NCalc" Version="3.1.253" />
+    <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.50.2" />
+    <PackageReference Include="Syncfusion.SfGrid.WPF" Version="29.1.41" />
     <PackageReference Include="YamlDotNet" Version="16.3.0" />
   </ItemGroup>
 
@@ -34,9 +37,14 @@
     <EmbeddedResource Include="Resources\ActorValues.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Secrets.yaml" />
     <EmbeddedResource Include="Resources\Settings.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Scripts\" />
   </ItemGroup>
 
 </Project>

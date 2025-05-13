@@ -1,4 +1,5 @@
-﻿using SkyrimActorValueEditor.Core.Services;
+﻿using SkyrimActorValueEditor.Core.Services.Config;
+using Syncfusion.Licensing;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -14,10 +15,12 @@ namespace SkyrimActorValueEditor
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-
             if (ConfigService.Get().Debug)
                 AllocConsole();
+
+            SyncfusionLicenseProvider.RegisterLicense(SyncfusionKeyGetter.GetKey());
+
+            base.OnStartup(e);
         }
     }
 }
