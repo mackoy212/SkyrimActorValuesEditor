@@ -43,6 +43,9 @@ namespace SkyrimActorValueEditor.Core.Extensions
                 IHasSpellConditionDataGetter conditionData =>
                     GameContext.TryResolve(conditionData.Spell.Link, out var spell) ? spell.EditorID : null,
 
+                IGetGlobalValueConditionDataGetter conditionData =>
+                    GameContext.TryResolve(conditionData.Global.Link, out var global) ? global.EditorID : null,
+
                 IGetEquippedItemTypeConditionDataGetter conditionData =>
                     conditionData.ItemSource.ToString(),
 
