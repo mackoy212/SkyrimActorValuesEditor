@@ -8,13 +8,22 @@ namespace SkyrimActorValueEditor.Models.ActorValues.Nodes.Records
     {
         public override float Value
         {
-            get => _value;
+            get => _totalValue;
             set { }
         }
 
         public IEffectGetter Effect { get; }
 
-        public bool IsDetrimental => Record.Flags.HasFlag(MagicEffect.Flag.Detrimental);
+        private float _totalValue
+        {
+            get
+            {
+                if (Record.Flags.HasFlag(MagicEffect.Flag.Detrimental))
+                    return -_value;
+
+                return _value;
+            }
+        }
 
         private float _value;
 
