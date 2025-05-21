@@ -36,7 +36,7 @@ namespace SkyrimActorValueEditor.ViewModels
         }
         public Array FilterOptions { get; } = Enum.GetValues(typeof(FilterOption));
 
-        public ICommand CopyNpcPropretyCommand { get; }
+        public ICommand CopyNpcPropertyCommand { get; }
         public ICommand SetFilterTextCommand { get; }
         public ICommand SaveChangesCommand { get; }
 
