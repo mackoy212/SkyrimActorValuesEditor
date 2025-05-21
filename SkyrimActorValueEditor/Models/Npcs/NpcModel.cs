@@ -49,7 +49,7 @@ namespace SkyrimActorValueEditor.Models.Npcs
         private static IEnumerable<NpcModel> GetTemplates(INpcSpawnGetter npcSpawn)
         {
             if (npcSpawn is INpcGetter npc
-                && NpcService.TryGetByFormKey(npc.FormKey, out var npcModel))
+                && NpcService.TryGetNpc(npc.FormKey, out var npcModel))
             {
                 yield return npcModel;
                 yield break;

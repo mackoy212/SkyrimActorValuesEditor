@@ -1,6 +1,6 @@
 ﻿using SkyrimActorValueEditor.Core.Extensions;
+using SkyrimActorValueEditor.Models.ActorValues.Common.Conditioned.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.SubRecords;
-using SkyrimActorValueEditor.Models.Common.Conditioned.Interfaces;
 
 namespace SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Builders
 {

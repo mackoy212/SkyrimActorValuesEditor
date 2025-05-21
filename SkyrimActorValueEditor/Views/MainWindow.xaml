@@ -40,7 +40,7 @@
                 VerticalContentAlignment="Center">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter"
-                        Command="{Binding ApplyFilterCommand}"
+                        Command="{Binding SetFilterTextCommand}"
                         CommandParameter="{Binding Text, ElementName=SearchBox}"/>
                 </TextBox.InputBindings>
             </TextBox>
@@ -78,16 +78,22 @@
 
             <syncfusion:SfTreeGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Copy FormKey" Command="{Binding CopyFormKeyCommand}" />
-                    <MenuItem Header="Copy EditorID" Command="{Binding CopyEditorIDCommand}" />
-                    <MenuItem Header="Copy Name" Command="{Binding CopyNameCommand}" />
+                    <MenuItem Header="Copy FormKey"
+                              Command="{Binding CopyNpcPropretyCommand}" 
+                              CommandParameter="{Binding SelectedNpc.FormKey}" />
+                    <MenuItem Header="Copy EditorID"
+                              Command="{Binding CopyNpcPropretyCommand}"
+                              CommandParameter="{Binding SelectedNpc.EditorID}"/>
+                    <MenuItem Header="Copy Name"
+                              Command="{Binding CopyNpcPropretyCommand}"
+                              CommandParameter="{Binding SelectedNpc.Name}"/>
                 </ContextMenu>
             </syncfusion:SfTreeGrid.ContextMenu>
         </syncfusion:SfTreeGrid>
 
         <syncfusion:SfTreeGrid
             x:Name="ActorValueTreeGrid"
-            ItemsSource="{Binding ActorValueTreeNodes}"
+            ItemsSource="{Binding ActorValueTree}"
             AutoGenerateColumns="False"
             ChildPropertyName="Children"
             AutoExpandMode="None"
@@ -118,7 +124,7 @@
 
             </syncfusion:SfTreeGrid.Columns>
         </syncfusion:SfTreeGrid>
-        
+
         <Button
             Command="{Binding SaveChangesCommand}"
             Grid.Column="1" 

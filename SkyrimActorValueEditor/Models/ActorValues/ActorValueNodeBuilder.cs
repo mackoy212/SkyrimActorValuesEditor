@@ -6,7 +6,6 @@ using SkyrimActorValueEditor.Models.ActorValues.NodeBuilders.Interfaces;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Base;
 using SkyrimActorValueEditor.Models.ActorValues.Nodes.Separate;
 using SkyrimActorValueEditor.Models.Npcs;
-using System.Collections.ObjectModel;
 
 namespace SkyrimActorValueEditor.Models.ActorValues
 {
@@ -33,13 +32,9 @@ namespace SkyrimActorValueEditor.Models.ActorValues
             _actorValuesNodesDictionary = actorValuesNodesDictionary;
         }
 
-        public static void LoadActorValues(ObservableCollection<TreeNode> actorValuesNodesView)
-        {
-            foreach (var node in _categoryNodes)
-                actorValuesNodesView.Add(node);
-        }
+        public static IEnumerable<TreeNode> LoadActorValues() => _categoryNodes;
 
-        public static void UpdateActorValues(NpcModel npcModel)
+        public static void RebuildActorValues(NpcModel npcModel)
         {
             foreach (var treeNode in _actorValuesNodesDictionary.Values)
                 treeNode.ClearNode();

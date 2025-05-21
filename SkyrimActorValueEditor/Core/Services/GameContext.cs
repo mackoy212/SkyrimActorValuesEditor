@@ -35,11 +35,7 @@ namespace SkyrimActorValueEditor.Core.Services
             _linkCache = _environment.LinkCache;
         }
 
-        public static IEnumerable<INpcGetter> LoadNPCs()
-        {
-            foreach (var npc in _environment.LoadOrder.PriorityOrder.Npc().WinningOverrides())
-                yield return npc;
-        }
+        public static IEnumerable<INpcGetter> LoadNPCs() => _environment.LoadOrder.PriorityOrder.Npc().WinningOverrides();
 
         public static bool TryResolve<TExpected>(IFormLinkGetter<TExpected> link, [MaybeNullWhen(false)] out TExpected record)
             where TExpected : class, ISkyrimMajorRecordGetter
@@ -47,10 +43,10 @@ namespace SkyrimActorValueEditor.Core.Services
             return _linkCache.TryResolve(link, out record);
         }
 
-        public static T GetOriginalOrOverride<T>(T originalRecord)
-            where T : class, ISkyrimMajorRecordGetter
+        public static TRecord GetOriginalOrOverride<TRecord>(TRecord originalRecord)
+            where TRecord : class, ISkyrimMajorRecordGetter
         {
-            return _outputMod.EnumerateMajorRecords<T>()
+            return _outputMod.EnumerateMajorRecords<TRecord>()
                     .FirstOrDefault(r => r.FormKey == originalRecord.FormKey)
                 ?? originalRecord;
         }
@@ -63,10 +59,7 @@ namespace SkyrimActorValueEditor.Core.Services
                 .GetOrAddAsOverride(record);
         }
 
-        public static void SaveChanges()
-        {
-            _outputMod.WriteToBinary(_outputModPath);
-        }
+        public static void SaveChanges() => _outputMod.WriteToBinary(_outputModPath);
 
         private static SkyrimMod GetOrCreateMod(string modName)
         {

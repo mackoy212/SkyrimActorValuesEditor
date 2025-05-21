@@ -1,7 +1,7 @@
 ﻿using Mutagen.Bethesda.Skyrim;
-using SkyrimActorValueEditor.Models.Common.Conditioned.Interfaces;
+using SkyrimActorValueEditor.Models.ActorValues.Common.Conditioned.Interfaces;
 
-namespace SkyrimActorValueEditor.Models.Common.Conditioned
+namespace SkyrimActorValueEditor.Models.ActorValues.Common.Conditioned
 {
     public class PerkEffectModel : IConditioned
     {
