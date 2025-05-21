@@ -44,7 +44,7 @@ namespace SkyrimActorValueEditor.ViewModels
 
         public MainWindowViewModel()
         {
-            CopyNpcPropretyCommand = new RelayCommand(arg =>
+            CopyNpcPropertyCommand = new RelayCommand(arg =>
             {
                 if (arg is string text && !string.IsNullOrEmpty(text))
                     Clipboard.SetText(text);

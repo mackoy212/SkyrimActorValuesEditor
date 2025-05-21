@@ -79,13 +79,13 @@
             <syncfusion:SfTreeGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Copy FormKey"
-                              Command="{Binding CopyNpcPropretyCommand}" 
+                              Command="{Binding CopyNpcPropertyCommand}" 
                               CommandParameter="{Binding SelectedNpc.FormKey}" />
                     <MenuItem Header="Copy EditorID"
-                              Command="{Binding CopyNpcPropretyCommand}"
+                              Command="{Binding CopyNpcPropertyCommand}"
                               CommandParameter="{Binding SelectedNpc.EditorID}"/>
                     <MenuItem Header="Copy Name"
-                              Command="{Binding CopyNpcPropretyCommand}"
+                              Command="{Binding CopyNpcPropertyCommand}"
                               CommandParameter="{Binding SelectedNpc.Name}"/>
                 </ContextMenu>
             </syncfusion:SfTreeGrid.ContextMenu>
